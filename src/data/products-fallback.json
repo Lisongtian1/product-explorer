@@ -1,0 +1,77 @@
+{
+  "products": [
+    {
+      "id": 1,
+      "title": "Essence Mascara Lash Princess",
+      "price": 9.99,
+      "stock": 5,
+      "category": "beauty"
+    },
+    {
+      "id": 2,
+      "title": "Eyeshadow Palette with Mirror",
+      "price": 19.99,
+      "stock": 44,
+      "category": "beauty"
+    },
+    {
+      "id": 3,
+      "title": "Powder Canister",
+      "price": 14.99,
+      "stock": 59,
+      "category": "beauty"
+    },
+    {
+      "id": 4,
+      "title": "Red Lipstick",
+      "price": 12.99,
+      "stock": 68,
+      "category": "beauty"
+    },
+    {
+      "id": 5,
+      "title": "Red Nail Polish",
+      "price": 8.99,
+      "stock": 71,
+      "category": "beauty"
+    },
+    {
+      "id": 6,
+      "title": "Calvin Klein CK One",
+      "price": 49.99,
+      "stock": 17,
+      "category": "fragrances"
+    },
+    {
+      "id": 7,
+      "title": "Chanel Coco Noir Eau De",
+      "price": 129.99,
+      "stock": 41,
+      "category": "fragrances"
+    },
+    {
+      "id": 8,
+      "title": "Dior J'adore",
+      "price": 89.99,
+      "stock": 91,
+      "category": "fragrances"
+    },
+    {
+      "id": 9,
+      "title": "Dolce Shine Eau de Parfum",
+      "price": 69.99,
+      "stock": 3,
+      "category": "fragrances"
+    },
+    {
+      "id": 10,
+      "title": "Gucci Bloom Eau de",
+      "price": 79.99,
+      "stock": 93,
+      "category": "fragrances"
+    }
+  ],
+  "total": 10,
+  "skip": 0,
+  "limit": 10
+}
