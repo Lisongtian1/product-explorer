@@ -2,61 +2,74 @@
 
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { SORT_FIELDS, SearchQuerySchema, defaultQuery } from "@/lib/products";
-import type { SearchQuery } from "@/lib/products";
+import { CATEGORIES, ProductDraftSchema } from "@/lib/products";
+import type { Product, ProductDraft } from "@/lib/products";
 
-type ProductSearchFormProps = {
-  onSearch: (query: SearchQuery) => Promise<void>;
+type ProductFormProps = {
+  initialData?: Product;
+  onSubmit: (values: ProductDraft) => void | Promise<void>;
+  isSubmitting?: boolean;
 };
 
-export default function ProductSearchForm({ onSearch }: ProductSearchFormProps) {
+export default function ProductForm({
+  initialData,
+  onSubmit,
+  isSubmitting = false,
+}: ProductFormProps) {
   const {
     register,
     handleSubmit,
-    formState: { errors, isSubmitting },
-  } = useForm<SearchQuery>({
-    resolver: zodResolver(SearchQuerySchema),
-    mode: "onTouched",
-    defaultValues: defaultQuery,
+    formState: { errors },
+  } = useForm<any>({
+    resolver: zodResolver(ProductDraftSchema) as any,
+    defaultValues: {
+      title: initialData?.title || initialData?.name || "",
+      price: initialData?.price ?? 0,
+      stock: initialData?.stock ?? 0,
+      category: initialData?.category || "furniture",
+      description: initialData?.description || "",
+    },
   });
 
   return (
-    <form onSubmit={handleSubmit(onSearch)} noValidate style={{ marginBottom: "1.5rem" }}>
+    <form onSubmit={handleSubmit(onSubmit as any)} noValidate style={{ display: "flex", flexDirection: "column", gap: "1rem", maxWidth: "400px" }}>
       <div>
-        <label htmlFor="q">คำค้น: </label>
-        <input id="q" {...register("q")} placeholder="เช่น phone" />
+        <label htmlFor="title">ชื่อสินค้า: </label>
+        <input id="title" {...register("title")} style={{ width: "100%", padding: "0.5rem" }} />
+        {errors.title && <span style={{ color: "red", fontSize: "0.875rem" }}>{errors.title.message as string}</span>}
       </div>
 
-      <div style={{ marginTop: "0.5rem" }}>
-        <label htmlFor="limit">จำนวนรายการ: </label>
-        <input
-          id="limit"
-          type="number"
-          required
-          {...register("limit", { valueAsNumber: true })}
-          aria-invalid={!!errors.limit}
-          aria-describedby="limit-error"
-        />
-        {errors.limit && (
-          <span id="limit-error" role="alert" style={{ color: "red", marginLeft: "0.5rem" }}>
-            {errors.limit.message}
-          </span>
-        )}
+      <div>
+        <label htmlFor="price">ราคา: </label>
+        <input id="price" type="number" step="0.01" {...register("price", { valueAsNumber: true })} style={{ width: "100%", padding: "0.5rem" }} />
+        {errors.price && <span style={{ color: "red", fontSize: "0.875rem" }}>{errors.price.message as string}</span>}
       </div>
 
-      <div style={{ marginTop: "0.5rem" }}>
-        <label htmlFor="sortBy">เรียงตาม: </label>
-        <select id="sortBy" {...register("sortBy")}>
-          {SORT_FIELDS.map((field) => (
-            <option key={field} value={field}>
-              {field}
+      <div>
+        <label htmlFor="stock">จำนวนในสต็อก: </label>
+        <input id="stock" type="number" {...register("stock", { valueAsNumber: true })} style={{ width: "100%", padding: "0.5rem" }} />
+        {errors.stock && <span style={{ color: "red", fontSize: "0.875rem" }}>{errors.stock.message as string}</span>}
+      </div>
+
+      <div>
+        <label htmlFor="category">หมวดหมู่: </label>
+        <select id="category" {...register("category")} style={{ width: "100%", padding: "0.5rem" }}>
+          {CATEGORIES.map((cat) => (
+            <option key={cat} value={cat}>
+              {cat}
             </option>
           ))}
         </select>
+        {errors.category && <span style={{ color: "red", fontSize: "0.875rem" }}>{errors.category.message as string}</span>}
       </div>
 
-      <button type="submit" disabled={isSubmitting} style={{ marginTop: "0.5rem" }}>
-        {isSubmitting ? "กำลังค้นหา..." : "ค้นหา"}
+      <div>
+        <label htmlFor="description">รายละเอียด: </label>
+        <textarea id="description" rows={3} {...register("description")} style={{ width: "100%", padding: "0.5rem" }} />
+      </div>
+
+      <button type="submit" disabled={isSubmitting} style={{ padding: "0.5rem 1rem", cursor: "pointer" }}>
+        {isSubmitting ? "กำลังบันทึก..." : "บันทึกข้อมูล"}
       </button>
     </form>
   );
