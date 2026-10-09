@@ -1,14 +1,184 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import url('https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600&display=swap');
 
-:root {
-  background-color: #ffffff;
-  color: #1e293b;
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
 body {
+  font-family: 'Prompt', -apple-system, BlinkMacSystemFont, sans-serif;
   background-color: #f8fafc;
-  color: #0f172a;
+  color: #1e293b;
   min-height: 100vh;
+  padding: 2rem 1rem;
+}
+
+/* คอนเทนเนอร์หลัก */
+main {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+/* Header แถบหัวกระดาษ */
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 1.5rem;
+  margin-bottom: 2rem;
+  border-bottom: 2px solid #e2e8f0;
+}
+
+h1 {
+  font-size: 1.875rem;
+  font-weight: 600;
+  color: #0f172a;
+}
+
+/* ส่วนของปุ่มและสถานะ Login/Logout */
+header div, form {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+span {
+  font-size: 0.95rem;
+  color: #475569;
+  font-weight: 500;
+}
+
+/* สไตล์ปุ่มกดทั่วไป */
+button {
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 0.9rem;
+  font-weight: 500;
+  padding: 0.6rem 1.2rem;
+  border-radius: 8px;
+  border: none;
+  transition: all 0.2s ease;
+}
+
+/* ปุ่ม Login with Google */
+button[type="submit"]:has(+ :empty), 
+button[type="submit"] {
+  background-color: #2563eb;
+  color: #ffffff;
+  box-shadow: 0 2px 4px rgba(37, 99, 235, 0.2);
+}
+
+button[type="submit"]:hover {
+  background-color: #1d4ed8;
+  transform: translateY(-1px);
+}
+
+/* กล่องรายการสินค้า (Grid Cards) */
+main > div {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 1.5rem;
+}
+
+/* กล่องสินค้าแต่ละชิ้น (Card) */
+article[data-testid="product"] {
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 1.5rem;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+article[data-testid="product"]:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.08);
+}
+
+article[data-testid="product"] h2 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #1e293b;
+  margin-bottom: 0.5rem;
+}
+
+article[data-testid="product"] p:first-of-type {
+  font-size: 0.9rem;
+  color: #64748b;
+  line-height: 1.5;
+  margin-bottom: 1rem;
+}
+
+/* ราคา */
+article[data-testid="product"] p:nth-of-type(2) {
+  font-size: 1.35rem;
+  font-weight: 600;
+  color: #059669;
+  margin-top: auto;
+  margin-bottom: 1rem;
+}
+
+/* ลิงก์แก้ไข และ ลบ */
+article[data-testid="product"] div {
+  display: flex;
+  gap: 0.5rem;
+  padding-top: 1rem;
+  border-top: 1px solid #f1f5f9;
+}
+
+article[data-testid="product"] a {
+  text-decoration: none;
+  font-size: 0.85rem;
+  font-weight: 500;
+  padding: 0.4rem 0.8rem;
+  border-radius: 6px;
+  text-align: center;
+  flex: 1;
+  transition: background 0.2s ease;
+}
+
+/* ปุ่มแก้ไข (สีฟ้าอ่อน) */
+article[data-testid="product"] a[href*="edit"] {
+  background-color: #eff6ff;
+  color: #2563eb;
+}
+
+article[data-testid="product"] a[href*="edit"]:hover {
+  background-color: #dbeafe;
+}
+
+/* ปุ่มลบ (สีแดงอ่อน) */
+article[data-testid="product"] a[href*="delete"] {
+  background-color: #fef2f2;
+  color: #dc2626;
+}
+
+article[data-testid="product"] a[href*="delete"]:hover {
+  background-color: #fee2e2;
+}
+
+/* สไตล์หน้าฟอร์มแก้ไขและลบสินค้า */
+form div {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1rem;
+  gap: 0.4rem;
+}
+
+input, textarea {
+  font-family: inherit;
+  padding: 0.6rem 0.8rem;
+  border: 1px solid #cbd5e1;
+  border-radius: 6px;
+  font-size: 0.95rem;
+  outline: none;
+}
+
+input:focus, textarea:focus {
+  border-color: #2563eb;
+  box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.2);
 }
