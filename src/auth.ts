@@ -1,7 +1,7 @@
 import NextAuth from "next-auth";
 import Google from "next-auth/providers/google";
 
-export const { handlers, auth, signIn, signOut } = NextAuth({
+export const { handlers, signIn, signOut, auth } = NextAuth({
   trustHost: true,
   providers: [
     Google({
@@ -9,15 +9,4 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
       clientSecret: process.env.AUTH_GOOGLE_SECRET,
     }),
   ],
-  callbacks: {
-    authorized({ auth, request }) {
-      const pathname = request.nextUrl.pathname;
-      const isProductManagementPage =
-        /^\/products\/[^/]+\/(edit|delete)$/.test(pathname);
-      if (isProductManagementPage) {
-        return Boolean(auth?.user);
-      }
-      return true;
-    },
-  },
 });

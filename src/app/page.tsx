@@ -3,8 +3,16 @@ import { auth } from "@/auth";
 import { getProducts } from "@/lib/products";
 import { AuthButtons } from "./auth-buttons";
 
+export const dynamic = "force-dynamic";
+
 export default async function HomePage() {
-  const session = await auth();
+  let session = null;
+  try {
+    session = await auth();
+  } catch (error) {
+    console.error("Auth session error:", error);
+  }
+
   const products = getProducts();
   const isLoggedIn = Boolean(session?.user);
 
